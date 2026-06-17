@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,7 +22,11 @@ export default function Login() {
     });
 
     const data = await response.json();
-    alert(data.message);
+    if (data.message === "Login successful") {
+      navigate("/dashboard");
+    } else {
+      alert(data.message);
+    }
   };
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-black flex items-center justify-center">
